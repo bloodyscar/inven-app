@@ -17,7 +17,9 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained("category")->onDelete('cascade'); // foreign key ke categories.id
            $table->string('lokasi'); 
             $table->integer('quantity'); // jumlah barang
+            $table->string('satuan')->nullable(); // satuan barang, nullable
             $table->text('description')->nullable(); // keterangan tambahan, nullable
+            $table->text('penerima')->nullable(); // keterangan tambahan, nullable
             $table->timestamps(); // created_at & updated_at
         });
     }

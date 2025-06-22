@@ -21,12 +21,18 @@
       <button id="exportExcel" class="btn btn-success mb-3">
         Excel
       </button>
+
+      <div>
+      <input type="text" id="searchBox" placeholder="Cari barang..." />
+
+      </div>
+
     </div>
     <div class="col-md-12">
       <div class="card mb-4">
         <!-- Account -->
         <div class="card-body">
-          <table id="myTable" class="table">
+          <table id="myTable" class="display table table-striped">
             <thead>
               <tr>
                 <th>Nama Barang</th>
@@ -162,15 +168,23 @@
       
     </div>
   </div>
+  
 </div>
+
 @endsection
 
 
 @section('script')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
-  
 
   <script>
+   $(document).ready(function () {
+        $('#myTable').DataTable({
+          searching: false,
+        });
+      });
     // $('#formBarang').on('submit', function(e) {
     //   e.preventDefault();
     //   let form = $(this);
@@ -263,19 +277,6 @@
         });
       }
     });
-
-    $(document).ready(function () {
-        $('#myTable').DataTable({
-          "columnDefs": [
-            { "className": "text-center", "targets": "_all" } // Apply center to all columns
-          ],
-          layout: { 
-              topStart: {
-                  buttons: ['excel']
-              }
-          }
-        });
-      });
 
       
       $('#exportExcel').on('click', function(e) {
