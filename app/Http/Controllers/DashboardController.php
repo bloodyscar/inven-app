@@ -13,8 +13,7 @@ class DashboardController extends Controller
     {
         $itemCount = Item::count();
         $userCount = User::count();
-        dd($itemCount, $userCount);
-        return view('pages.dashboard', compact('itemCount', 'userCount'));
+        return view('dashboard', compact('itemCount', 'userCount'));
     }
 
 }

@@ -29,7 +29,7 @@
   <div class="row">
 
     <div class="col-md-4">
-      <h3 class="">Daftar Barang</h3>
+      <h3 class="mt-5 mb-5">Daftar Barang</h3>
       
               <!-- Button trigger modal -->
       <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -41,7 +41,17 @@
       </button>
 
       <div>
-      <input type="text" id="searchBox" placeholder="Cari barang..." />
+      <input type="text" id="searchNamaBarang" class="form-control mb-2" placeholder="Cari nama barang...">
+        <small id="searchTime" class="text-muted"></small>
+
+      <div id="searchNarration" class="mt-3 border p-3 rounded bg-light mb-3" style="display: none;">
+        <strong>🔍 Tahapan Algoritma Sequential Search:</strong>
+        <div id="stepsText" class="mt-2" style="white-space: pre-line; font-family: monospace;"></div>
+      </div>
+
+
+
+
 
       </div>
 
@@ -97,7 +107,7 @@
   </div>
 </div>
 
-{{-- Modal Edit  --}}
+<!-- {{-- Modal Edit  --}} -->
 <div class="modal fade" id="exampleModalEdit" tabindex="-1" aria-labelledby="exampleModalEditLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -234,8 +244,48 @@
  
   <script>
    $(document).ready(function () {
+
+    $('#searchNamaBarang').on('keyup', function () {
+      $('#searchNarration').show();
+      const keyword = $(this).val().toLowerCase();
+      const rows = $('#myTable tbody tr');
+      let narration = '';
+      let found = false;
+      const startTime = performance.now();
+
+      rows.each(function (index) {
+        const row = $(this);
+        const namaBarang = row.find('td:nth-child(1)').text().toLowerCase();
+
+        narration += `Cek baris[${index}] → "${namaBarang}" `;
+        if (namaBarang.includes(keyword)) {
+          narration += `✅ cocok → berhenti dan tampilkan\n`;
+          row.show();
+          found = true;
+        } else {
+          narration += `❌ tidak cocok → lanjut\n`;
+          row.hide();
+        }
+      });
+
+      if (!found && keyword !== '') {
+        narration += `🔴 Barang tidak ditemukan dalam seluruh baris.\n`;
+      }
+
+      const endTime = performance.now();
+      const duration = (endTime - startTime).toFixed(2);
+
+      $('#stepsText').text(narration);
+      $('#searchTime').text(`Waktu pencarian: ${duration} ms`);
+    });
+
+
+
+
+
         $('#myTable').DataTable({
           searching: false,
+          paging:false
           
         });
       });

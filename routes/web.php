@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ItemController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,9 +21,7 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/barang', [ItemController::class, 'index'])->middleware(['auth', 'verified'])->name('item.index');
 Route::post('/barang', [ItemController::class, 'store'])->middleware(['auth', 'verified'])->name('item.store');

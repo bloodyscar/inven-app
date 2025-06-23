@@ -29,21 +29,13 @@
   <div class="row">
 
     <div class="col-md-4">
-      <h3 class="">Daftar Kategori</h3>
+      <h3 class="mb-5 mt-5">Daftar Kategori</h3>
       
+
               <!-- Button trigger modal -->
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Tambah Kategori
-</button>
-
-      <button id="exportExcel" class="btn btn-success mb-3">
-        Excel
+      <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Tambah Kategori
       </button>
-
-      <div>
-      <input type="text" id="searchBox" placeholder="Cari barang..." />
-
-      </div>
 
     </div>
     <div class="col-md-12">

@@ -54,7 +54,7 @@
             </a>
           </li>
 <span class="divider"><hr /></span>
-          <li class="nav-item {{ Request::is('user*') ? 'active' : '' }}">
+          <!-- <li class="nav-item {{ Request::is('user*') ? 'active' : '' }}">
             <a href="/user">
               <span class="icon">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -70,11 +70,27 @@
               </span>
               <span class="text">User</span>
             </a>
+          </li> -->
+
+          <li class="nav-item">
+              <form method="POST" action="{{ route('logout') }}">
+                  @csrf
+
+                  <x-dropdown-link :href="route('logout')"
+                      onclick="event.preventDefault();
+                              if (confirm('Apakah Anda yakin ingin logout?')) {
+                                  this.closest('form').submit();
+                              }">
+                      <i class="menu-icon tf-icons bx bx-log-out"></i>
+                      <span class="ms-1">{{ __('Log Out') }}</span>
+                  </x-dropdown-link>
+              </form>
           </li>
 
 
 
-          <li class="nav-item nav-item-has-children">
+
+          <!-- <li class="nav-item nav-item-has-children">
             <a
               href="#0"
               class="collapsed"
@@ -205,17 +221,20 @@
               </span>
               <span class="text">Notifications</span>
             </a>
-          </li>
+          </li> -->
         </ul>
       </nav>
-      <div class="promo-box">
-        <div class="promo-icon">
-          <img class="mx-auto" src="./assets/images/logo/logo-icon-big.svg" alt="Logo">
-        </div>
-        <h3>Upgrade to PRO</h3>
-        <p>Improve your development process and start doing more with PlainAdmin PRO!</p>
-        <a href="https://plainadmin.com/pro" target="_blank" rel="nofollow" class="main-btn primary-btn btn-hover">
-          Upgrade to PRO
-        </a>
-      </div>
     </aside>
+
+
+    @section('script')
+    <script>
+      function confirmLogout(e) {
+        e.preventDefault();
+        if (confirm("Apakah kamu yakin ingin logout?")) {
+          document.getElementById('logout-form').submit();
+        }
+      }
+    </script>
+
+    @endsection

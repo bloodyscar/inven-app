@@ -39,7 +39,7 @@
                 </div>
                 <div class="content">
                   <h6 class="mb-10">Inventaris Barang</h6>
-                  <h3 class="text-bold mb-10">{{ itemCount}}</h3>
+                  <h3 class="text-bold mb-10">{{ $itemCount }}</h3>
                   
                 </div>
               </div>
@@ -55,7 +55,7 @@
                 </div>
                 <div class="content">
                   <h6 class="mb-10">Data User</h6>
-                  <h3 class="text-bold mb-10">{{ userCount }}</h3>
+                  <h3 class="text-bold mb-10">{{ $userCount }}</h3>
 
                 </div>
               </div>
