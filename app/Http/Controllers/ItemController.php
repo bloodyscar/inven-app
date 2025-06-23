@@ -34,12 +34,12 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
             'nama_barang' => 'required',
             'category_id' => 'required',
             'lokasi' => 'required',
             'qty' => 'required',
-            'deskripsi' => 'required',
         ]);
     
         
@@ -49,13 +49,19 @@ class ItemController extends Controller
             $item->category_id = $request->category_id;
             $item->lokasi = $request->lokasi;
             $item->quantity = $request->qty;
+
+            $item->satuan = $request->satuan;
             $item->description = $request->deskripsi;
-            $item->save();
+            $item->penerima = $request->penerima;
+            $item->saveOrFail();
+
+
+
+            
 
         return redirect()->back()->with('success', 'Barang berhasil ditambahkan!');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Gagal menambahkan barang: ' . $e->getMessage());
-        
+        } catch (\Throwable $e) {
+           return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
     }
 
@@ -86,8 +92,13 @@ class ItemController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Item $item)
+    public function destroy(string $id)
     {
-        //
+        try {
+            Item::destroy($id);
+            return response()->json(['success' => true]);
+        } catch (\Throwable $e) {
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
+        }
     }
 }

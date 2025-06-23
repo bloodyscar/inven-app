@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ItemController;
 use Illuminate\Support\Facades\Route;
@@ -25,9 +26,13 @@ Route::get('/dashboard', function () {
 
 Route::get('/barang', [ItemController::class, 'index'])->middleware(['auth', 'verified'])->name('item.index');
 Route::post('/barang', [ItemController::class, 'store'])->middleware(['auth', 'verified'])->name('item.store');
-Route::get('/barang/{item}/edit', [ItemController::class, 'edit'])->middleware(['auth', 'verified'])->name('item.edit');
 Route::put('/barang/{item}', [ItemController::class, 'update'])->middleware(['auth', 'verified'])->name('item.update');
-Route::delete('/barang/{item}', [ItemController::class, 'destroy'])->middleware(['auth', 'verified'])->name('item.destroy');
+Route::delete('/barang/delete/{item}', [ItemController::class, 'destroy'])->middleware(['auth', 'verified'])->name('item.destroy');
+
+Route::get('/kategori', [CategoryController::class, 'index'])->middleware(['auth', 'verified'])->name('category.index');
+Route::post('/kategori', [CategoryController::class, 'store'])->middleware(['auth', 'verified'])->name('category.store');
+Route::put('/kategori/update/{category}', [CategoryController::class, 'update'])->middleware(['auth', 'verified'])->name('category.update');
+Route::delete('/kategori/delete/{category}', [CategoryController::class, 'destroy'])->middleware(['auth', 'verified'])->name('category.destroy');
 
 
 Route::middleware('auth')->group(function () {

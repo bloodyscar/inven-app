@@ -5,9 +5,27 @@
 
 
 
+    @if (session('error'))
+  <div class="alert alert-danger">
+    {{ session('error') }}
+  </div>
+@endif
+
+@if ($errors->any())
+  <div class="alert alert-danger">
+    <ul>
+      @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+      @endforeach
+    </ul>
+  </div>
+@endif
 
 
 <div class="container flex-grow-1 container-p-y">
+
+
+
   <div class="row">
 
     <div class="col-md-4">
@@ -32,6 +50,7 @@
       <div class="card mb-4">
         <!-- Account -->
         <div class="card-body">
+          
           <table id="myTable" class="display table table-striped">
             <thead>
               <tr>
@@ -39,20 +58,29 @@
                 <th>Kategori</th>
                 <th>Lokasi</th>
                 <th>Qty</th>
+                <th>Satuan</th>
                 <th>Deskripsi</th>
+                <th>Penerima</th>
+                <th>Dibuat tanggal</th>
                 <th>Aksi</th>
               </tr>
             </thead>
             <tbody>
-              @forelse($barang as $item)
+              @foreach ($barang as $item)
               <tr>
                 <td>{{ $item->name }}</td>
                 <td>{{ $item->category_name }}</td>
                 <td>{{ $item->lokasi }}</td>
                 <td>{{ $item->quantity }}</td>
+                <td>{{ $item->satuan }}</td>
                 <td>{{ $item->description }}</td>
+                <td>{{ $item->penerima }}</td>
+                <td>{{ \Carbon\Carbon::parse($item->created_at)->format('d-m-Y') }}</td>
+
+
+
                 <td>
-                  <button class="btn btn-warning btn-sm editBarang" data-id="{{ $item->id }}" data-nama="{{ $item->name }}"  data-deskripsi="{{ $item->description }}">
+                  <button class="btn btn-warning btn-sm editBarang" data-id="{{ $item->id }}" data-nama="{{ $item->name }}" data-kategori="{{ $item->category_name }}" data-lokasi="{{ $item->lokasi }}" data-qty="{{ $item->quantity }}"  data-satuan="{{ $item->satuan }}" data-deskripsi="{{ $item->description }}" data-penerima="{{ $item->penerima }}">
                     ✏️ Edit
                   </button>
                   <button class="btn btn-danger btn-sm deleteBarang" data-id="{{ $item->id }}">
@@ -60,13 +88,7 @@
                   </button>
                 </td>
               </tr>
-              @empty
-              <tr>
-                <td colspan="6" class="text-center">
-                  <b>Data Kosong</b>
-                </td>
-              </tr>
-              @endforelse
+              @endforeach
             </tbody>
           </table>
         </div>  
@@ -94,15 +116,35 @@
               <input type="text" class="form-control" name="nama_barang" placeholder="Masukkan nama barang" required>
             </div>
 
+             <div class="mb-3">
+              <label for="kategori" class="form-label">Kategori</label>
+              <input type="text" class="form-control" name="kategori" placeholder="Masukkan kategori" required>
+            </div>
+
+             <div class="mb-3">
+              <label for="lokasi" class="form-label">Lokasi</label>
+              <input type="text" class="form-control" name="lokasi" placeholder="Masukkan lokasi" required>
+            </div>
             
-            <!-- <div class="mb-3">
-              <label for="stok" class="form-label">Stok</label>
-              <input type="number" class="form-control" name="stok" placeholder="Masukkan jumlah stok" required>
-            </div> -->
+            
+            <div class="mb-3">
+              <label for="qty" class="form-label">Qty</label>
+              <input type="number" class="form-control" name="qty" placeholder="Masukkan jumlah qty" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="satuan" class="form-label">Satuan</label>
+              <input type="text" class="form-control" name="satuan" placeholder="Masukkan jumlah satuan" required>
+            </div>
   
             <div class="mb-3">
               <label for="deskripsi" class="form-label">Deskripsi</label>
               <textarea class="form-control" name="deskripsi" placeholder="Masukkan deskripsi barang"></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label for="penerima" class="form-label">Penerima</label>
+              <input type="text" class="form-control" name="penerima" placeholder="Masukkan nama penerima" required>
             </div>
           </div>
           <div class="modal-footer">
@@ -149,15 +191,25 @@
             </div>
 
             <div class="mb-3">
-              <label for="qty" class="form-label">QTY</label>
-              <input type="number" class="form-control" name="qty" placeholder="Masukkan QTY" required>
+              <label for="qty" class="form-label">Qty</label>
+              <input type="number" class="form-control" name="qty" placeholder="Masukkan Qty" required>
             </div>
-  
-  
+
             <div class="mb-3">
+              <label for="satuan" class="form-label">Satuan</label>
+              <input type="text" class="form-control" name="satuan" placeholder="Masukkan satuan" required>
+            </div>
+
+             <div class="mb-3">
               <label for="deskripsi" class="form-label">Deskripsi</label>
               <textarea class="form-control" name="deskripsi" placeholder="Masukkan deskripsi barang"></textarea>
             </div>
+
+             <div class="mb-3">
+              <label for="penerima" class="form-label">Penerima</label>
+              <input type="text" class="form-control" name="penerima" placeholder="Masukkan Nama Penerima" required>
+            </div>
+  
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -177,12 +229,14 @@
 @section('script')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+ 
   <script>
    $(document).ready(function () {
         $('#myTable').DataTable({
           searching: false,
+          
         });
       });
     // $('#formBarang').on('submit', function(e) {
@@ -222,18 +276,24 @@
 
     $('.editBarang').on('click', function () {
       let id = $(this).data('id');
-      let kode = $(this).data('kode');
       let nama = $(this).data('nama');
-      let stok = $(this).data('stok');
+      let kategori = $(this).data('kategori');
+      let lokasi = $(this).data('lokasi');
+      let qty = $(this).data('qty');
+      let satuan = $(this).data('satuan');
       let deskripsi = $(this).data('deskripsi');
+      let penerima = $(this).data('penerima');
 
       console.log(id)
 
       $('#exampleModalEdit').modal('show');
-      $('input[name="kode_barang"]').val(kode);
       $('input[name="nama_barang"]').val(nama);
-      $('input[name="stok"]').val(stok);
+      $('input[name="kategori"]').val(kategori);
+      $('input[name="lokasi"]').val(lokasi);
+      $('input[name="qty"]').val(qty);
+      $('input[name="satuan"]').val(satuan);
       $('textarea[name="deskripsi"]').val(deskripsi);
+      $('input[name="penerima"]').val(penerima);
 
       $('#formBarangUpdate').submit(function (e) {
         e.preventDefault();

@@ -3,16 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Barang;
-use App\Models\BarangMasuk;
-use App\Models\BarangKeluar;
+use App\Models\Item;
+use App\Models\User;
 
 class DashboardController extends Controller
 {
 
     public function index()
     {
-        return view('pages.dashboard');
+        $itemCount = Item::count();
+        $userCount = User::count();
+        dd($itemCount, $userCount);
+        return view('pages.dashboard', compact('itemCount', 'userCount'));
     }
 
 }

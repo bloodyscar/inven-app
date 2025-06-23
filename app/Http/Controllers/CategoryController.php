@@ -12,7 +12,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        return view('pages.kategori', [
+            'categories' => Category::all(),
+        ]);
     }
 
     /**
@@ -28,7 +30,15 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'kategori' => 'required|string|max:255',
+        ]);
+
+        Category::create([
+            'kategori' => $request->kategori,
+        ]);
+
+        return redirect()->route('category.index')->with('success', 'Category created successfully.');
     }
 
     /**
@@ -52,14 +62,30 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $request->validate([
+            'kategori' => 'required|string|max:255',
+        ]);
+
+        try {
+            $category->update([
+                'kategori' => $request->kategori,
+            ]);
+            return response()->json(['success' => true]);
+        } catch (\Throwable $e) {
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category)
+    public function destroy(string $id)
     {
-        //
+         try {
+            Category::destroy($id);
+            return response()->json(['success' => true]);
+        } catch (\Throwable $e) {
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
+        }
     }
 }

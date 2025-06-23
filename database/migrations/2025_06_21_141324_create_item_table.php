@@ -20,7 +20,9 @@ return new class extends Migration
             $table->string('satuan')->nullable(); // satuan barang, nullable
             $table->text('description')->nullable(); // keterangan tambahan, nullable
             $table->text('penerima')->nullable(); // keterangan tambahan, nullable
-            $table->timestamps(); // created_at & updated_at
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
+ // created_at & updated_at
         });
     }
 

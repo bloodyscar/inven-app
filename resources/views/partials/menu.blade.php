@@ -8,7 +8,7 @@
       </div>
       <nav class="sidebar-nav">
         <ul>
-          <li class="nav-item active">
+          <li class="nav-item {{ Request::is('dashboard*') ? 'active' : '' }}">
             <a
               href="/dashboard"
              
@@ -25,7 +25,7 @@
             </a>
             
           </li>
-          <li class="nav-item ">
+          <li class="nav-item {{ Request::is('barang*') ? 'active' : '' }}">
             <a
               href="/barang"
               
@@ -42,7 +42,7 @@
             </a>
            
           </li>
-          <li class="nav-item">
+          <li class="nav-item {{ Request::is('kategori*') ? 'active' : '' }}">
             <a href="/kategori">
               <span class="icon">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -53,9 +53,9 @@
               <span class="text">Kategori</span>
             </a>
           </li>
-
-           <li class="nav-item">
-            <a href="/lokasi">
+<span class="divider"><hr /></span>
+          <li class="nav-item {{ Request::is('user*') ? 'active' : '' }}">
+            <a href="/user">
               <span class="icon">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
@@ -66,13 +66,14 @@
                     d="M10.8333 5.41669C10.8333 3.34562 12.5123 1.66669 14.5833 1.66669C16.6544 1.66669 18.3333 3.34562 18.3333 5.41669C18.3333 7.48775 16.6544 9.16669 14.5833 9.16669C12.5123 9.16669 10.8333 7.48775 10.8333 5.41669Z" />
                   <path
                     d="M10.8333 14.5834C10.8333 12.5123 12.5123 10.8334 14.5833 10.8334C16.6544 10.8334 18.3333 12.5123 18.3333 14.5834C18.3333 16.6545 16.6544 18.3334 14.5833 18.3334C12.5123 18.3334 10.8333 16.6545 10.8333 14.5834Z" />
-                </svg>
+                </svg>  
               </span>
-              <span class="text">Lokasi</span>
+              <span class="text">User</span>
             </a>
           </li>
 
-          <span class="divider"><hr /></span>
+
+
           <li class="nav-item nav-item-has-children">
             <a
               href="#0"

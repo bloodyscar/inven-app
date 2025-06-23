@@ -14,6 +14,8 @@ class Item extends Model
         'lokasi',
         'quantity',
         'description',
+        'penerima',
+        'satuan',
     ];
 
     public function category()
